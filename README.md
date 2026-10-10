@@ -1,2 +1,3 @@
 # JS com Node.js | Curso
-Repositório de atividades feitas no curso de JavaScript com Node.js
+O programa que o professor propôs para os alunos criarem, deve inicialmente conseguir contar palavras dentro de um arquivo de texto.
+
