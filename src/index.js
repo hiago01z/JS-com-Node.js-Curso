@@ -9,4 +9,6 @@ fs.readFile(linkTexto, "utf-8", (erro, texto) => {
   console.log(palavras.length)
   
 });
+
+console.log('Hello world')
  
