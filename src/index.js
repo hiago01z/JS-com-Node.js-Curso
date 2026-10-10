@@ -10,5 +10,5 @@ fs.readFile(linkTexto, "utf-8", (erro, texto) => {
   
 });
 
-console.log('Hello world')
+console.log('Hello world');
  
