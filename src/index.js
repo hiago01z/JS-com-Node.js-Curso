@@ -14,7 +14,8 @@ function verificaPalavrasDuplicadas(texto) {
   const listaPalavras = texto.split(/\s+/);
   const resultado = {};
   listaPalavras.forEach((palavra) => {
-    resultado[palavra] = (resultado[palavra] || 0) + 1;
+    const palavraLimpa = limpaPalavras(palavra)
+    resultado[palavraLimpa] = (resultado[palavraLimpa] || 0) + 1;
   });
   return resultado; 
 }
@@ -26,4 +27,9 @@ function separaPorParagrafo(texto) {
     return verificaPalavrasDuplicadas(paragrafo);
   });
   console.log(contagem);
+}
+
+//remove caracteres especiais do texto
+function limpaPalavras(palavra) {
+  return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'' )
 }
