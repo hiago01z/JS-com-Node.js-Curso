@@ -1,18 +1,15 @@
+//importando o módulo fs
 const fs = require("fs");
+
+//será usado para capturar o caminho do arquivo pelo terminal
 const linkTexto = process.argv[2];
 
+//usando a função readFile de fs para capturar nosso texto e usar como argumento da função verificaPalavrasDuplicadas
 fs.readFile(linkTexto, "utf-8", (erro, texto) => {
-  if (erro) {
-    if (erro.code === "ENOENT") {
-      console.log("Erro: ", erro);
-    } else {
-      console.log("Erro: ", erro);
-    }
-    return;
-  }
   separaPorParagrafo(texto);
 });
 
+//verificando palavras duplicadas
 function verificaPalavrasDuplicadas(texto) {
   const listaPalavras = texto.split(/\s+/);
   const resultado = {};
@@ -25,8 +22,9 @@ function verificaPalavrasDuplicadas(texto) {
   return resultado;
 }
 
+//separando o texto por parágrafos e verificando palavras duplicadas por parágrafo
 function separaPorParagrafo(texto) {
-  const paragrafos = texto.split("\n");
+  const paragrafos = texto.toLowerCase().split("\n");
   const contagem = paragrafos.flatMap((paragrafo) => {
     if (!paragrafo) return [];
     return verificaPalavrasDuplicadas(paragrafo);
@@ -35,6 +33,7 @@ function separaPorParagrafo(texto) {
   console.log(contagem);
 }
 
+//remove caracteres especiais do texto
 function limpaPalavras(palavra) {
-  return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").toLowerCase();
+  return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
 }
