@@ -1,39 +1,47 @@
-//importando o módulo fs
 const fs = require("fs");
 
-//será usado para capturar o caminho do arquivo pelo terminal
-const linkTexto = process.argv[2];
+const link = process.argv[2];
 
-//usando a função readFile de fs para capturar nosso texto e usar como argumento da função verificaPalavrasDuplicadas
-fs.readFile(linkTexto, "utf-8", (erro, texto) => {
-  separaPorParagrafo(texto);
+fs.readFile(link, "utf-8", (erro, texto) => {
+  try {
+    if (erro) throw erro;
+    contaPalavras(texto);
+  } catch (erro) {
+    if(erro.code === 'ENOENT'){console.log("Caminho do arquivo errado: erro ", erro.code);
+
+    }else{
+      console.log('Ocorreu um erro desconhecido: ', erro.code)
+    }
+      
+  }
 });
 
-//verificando palavras duplicadas
+function contaPalavras(texto) {
+  const paragrafos = extraiParagrafos(texto);
+  const contagem = paragrafos.flatMap((paragrafo) => {
+    if (!paragrafo) return [];
+    return verificaPalavrasDuplicadas(paragrafo);
+  });
+  console.log(contagem);
+}
+
+function extraiParagrafos(texto) {
+  return texto.toLowerCase().split("\n");
+}
+
+function limpaPalavras(palavra) {
+  return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+}
+
 function verificaPalavrasDuplicadas(texto) {
-  const listaPalavras = texto.split(/\s+/);
+  const listaPalavras = texto.split(" ");
   const resultado = {};
+
   listaPalavras.forEach((palavra) => {
-    if (palavra.length > 3) {
+    if (palavra.length >= 3) {
       const palavraLimpa = limpaPalavras(palavra);
       resultado[palavraLimpa] = (resultado[palavraLimpa] || 0) + 1;
     }
   });
   return resultado;
-}
-
-//separando o texto por parágrafos e verificando palavras duplicadas por parágrafo
-function separaPorParagrafo(texto) {
-  const paragrafos = texto.toLowerCase().split("\n");
-  const contagem = paragrafos.flatMap((paragrafo) => {
-    if (!paragrafo) return [];
-    return verificaPalavrasDuplicadas(paragrafo);
-  });
-
-  console.log(contagem);
-}
-
-//remove caracteres especiais do texto
-function limpaPalavras(palavra) {
-  return palavra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
 }
