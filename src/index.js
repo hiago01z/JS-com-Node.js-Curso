@@ -1,5 +1,5 @@
 const fs = require("fs");
-
+const trataErros = require("../erros/funcoesErros");
 const link = process.argv[2];
 
 fs.readFile(link, "utf-8", (erro, texto) => {
@@ -7,11 +7,7 @@ fs.readFile(link, "utf-8", (erro, texto) => {
     if (erro) throw erro;
     contaPalavras(texto);
   } catch (erro) {
-    if(erro.code === 'ENOENT'){console.log("Caminho do arquivo errado: erro ", erro.code);
-
-    }else{
-      console.log('Ocorreu um erro desconhecido: ', erro.code)
-    }
+    trataErros(erro);
       
   }
 });
