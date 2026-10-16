@@ -7,8 +7,7 @@ fs.readFile(link, "utf-8", (erro, texto) => {
     if (erro) throw erro;
     contaPalavras(texto);
   } catch (erro) {
-    trataErros(erro);
-      
+    trataErros(erro);  
   }
 });
 
